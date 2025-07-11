@@ -14,185 +14,7 @@ export type Database = {
   }
   public: {
     Tables: {
-      admin_users: {
-        Row: {
-          created_at: string | null
-          email: string
-          id: string
-          password_hash: string
-          role: Database["public"]["Enums"]["admin_role"]
-          updated_at: string | null
-          username: string
-        }
-        Insert: {
-          created_at?: string | null
-          email: string
-          id?: string
-          password_hash: string
-          role?: Database["public"]["Enums"]["admin_role"]
-          updated_at?: string | null
-          username: string
-        }
-        Update: {
-          created_at?: string | null
-          email?: string
-          id?: string
-          password_hash?: string
-          role?: Database["public"]["Enums"]["admin_role"]
-          updated_at?: string | null
-          username?: string
-        }
-        Relationships: []
-      }
-      appointments: {
-        Row: {
-          appointment_date: string
-          appointment_time: string
-          booked_at: string | null
-          id: string
-          lead_id: string | null
-          slot_id: string | null
-          status: Database["public"]["Enums"]["appointment_status"] | null
-          updated_at: string | null
-        }
-        Insert: {
-          appointment_date: string
-          appointment_time: string
-          booked_at?: string | null
-          id?: string
-          lead_id?: string | null
-          slot_id?: string | null
-          status?: Database["public"]["Enums"]["appointment_status"] | null
-          updated_at?: string | null
-        }
-        Update: {
-          appointment_date?: string
-          appointment_time?: string
-          booked_at?: string | null
-          id?: string
-          lead_id?: string | null
-          slot_id?: string | null
-          status?: Database["public"]["Enums"]["appointment_status"] | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "appointments_lead_id_fkey"
-            columns: ["lead_id"]
-            isOneToOne: false
-            referencedRelation: "leads"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "appointments_slot_id_fkey"
-            columns: ["slot_id"]
-            isOneToOne: false
-            referencedRelation: "available_slots"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      available_slots: {
-        Row: {
-          created_at: string | null
-          date: string
-          id: string
-          is_available: boolean | null
-          managed_by_admin_id: string | null
-          time_slot: string
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          date: string
-          id?: string
-          is_available?: boolean | null
-          managed_by_admin_id?: string | null
-          time_slot: string
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          date?: string
-          id?: string
-          is_available?: boolean | null
-          managed_by_admin_id?: string | null
-          time_slot?: string
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "available_slots_managed_by_admin_id_fkey"
-            columns: ["managed_by_admin_id"]
-            isOneToOne: false
-            referencedRelation: "admin_users"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      leads: {
-        Row: {
-          age: number | null
-          busyness_level: string | null
-          city: string | null
-          created_at: string | null
-          full_name: string
-          gender: string | null
-          health_conditions: string | null
-          health_goals: string | null
-          id: string
-          internal_notes: string | null
-          okay_with_paid_plan: boolean
-          past_attempts: string | null
-          phone_number: string
-          preferred_consultation_date_time: string | null
-          status: Database["public"]["Enums"]["lead_status"] | null
-          updated_at: string | null
-          weight_gain_reason: string | null
-          why_lose_weight: string | null
-        }
-        Insert: {
-          age?: number | null
-          busyness_level?: string | null
-          city?: string | null
-          created_at?: string | null
-          full_name: string
-          gender?: string | null
-          health_conditions?: string | null
-          health_goals?: string | null
-          id?: string
-          internal_notes?: string | null
-          okay_with_paid_plan: boolean
-          past_attempts?: string | null
-          phone_number: string
-          preferred_consultation_date_time?: string | null
-          status?: Database["public"]["Enums"]["lead_status"] | null
-          updated_at?: string | null
-          weight_gain_reason?: string | null
-          why_lose_weight?: string | null
-        }
-        Update: {
-          age?: number | null
-          busyness_level?: string | null
-          city?: string | null
-          created_at?: string | null
-          full_name?: string
-          gender?: string | null
-          health_conditions?: string | null
-          health_goals?: string | null
-          id?: string
-          internal_notes?: string | null
-          okay_with_paid_plan?: boolean
-          past_attempts?: string | null
-          phone_number?: string
-          preferred_consultation_date_time?: string | null
-          status?: Database["public"]["Enums"]["lead_status"] | null
-          updated_at?: string | null
-          weight_gain_reason?: string | null
-          why_lose_weight?: string | null
-        }
-        Relationships: []
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never
@@ -201,15 +23,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      admin_role: "admin" | "counselor"
-      appointment_status: "available" | "booked" | "canceled"
-      lead_status:
-        | "new"
-        | "contacted"
-        | "follow_up_needed"
-        | "booked"
-        | "converted"
-        | "closed"
+      [_ in never]: never
     }
     CompositeTypes: {
       [_ in never]: never
@@ -336,17 +150,6 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {
-      admin_role: ["admin", "counselor"],
-      appointment_status: ["available", "booked", "canceled"],
-      lead_status: [
-        "new",
-        "contacted",
-        "follow_up_needed",
-        "booked",
-        "converted",
-        "closed",
-      ],
-    },
+    Enums: {},
   },
 } as const
