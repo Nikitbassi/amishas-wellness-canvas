@@ -116,7 +116,12 @@ const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
 
   const sendWhatsAppConfirmation = async () => {
     try {
-      console.log('Sending WhatsApp confirmation...');
+      console.log('Sending WhatsApp confirmation with data:', {
+        phoneNumber: formData.phoneNumber,
+        fullName: formData.fullName,
+        selectedSlot: selectedSlot,
+        formData: formData
+      });
       
       const { data, error } = await supabase.functions.invoke('send-whatsapp-confirmation', {
         body: {
@@ -130,13 +135,22 @@ const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
       if (error) {
         console.error('WhatsApp confirmation error:', error);
         toast.error("Appointment booked but WhatsApp confirmation failed. We'll contact you soon!");
+        return false;
       } else {
         console.log('WhatsApp confirmation sent successfully:', data);
-        toast.success("Consultation booked successfully! WhatsApp confirmation sent to your number.");
+        if (data && data.success) {
+          toast.success("Consultation booked successfully! WhatsApp confirmation sent to your number.");
+          return true;
+        } else {
+          console.error('WhatsApp confirmation failed:', data);
+          toast.error("Appointment booked but WhatsApp confirmation failed. We'll contact you soon!");
+          return false;
+        }
       }
     } catch (error) {
       console.error('Unexpected error sending WhatsApp:', error);
       toast.error("Appointment booked but WhatsApp confirmation failed. We'll contact you soon!");
+      return false;
     }
   };
 
@@ -184,10 +198,11 @@ const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
     setIsBooking(true);
     
     try {
-      // Save lead to database
+      // Save lead to database first
       await saveLeadToDatabase();
+      toast.success("Appointment booked successfully!");
       
-      // Send WhatsApp confirmation
+      // Send WhatsApp confirmation (this won't block the success message)
       await sendWhatsAppConfirmation();
       
       setTimeout(() => {

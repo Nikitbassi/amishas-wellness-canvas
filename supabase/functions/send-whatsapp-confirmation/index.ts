@@ -23,6 +23,7 @@ serve(async (req) => {
     const templateId = Deno.env.get('MSG91_WHATSAPP_TEMPLATE_ID');
 
     if (!authKey || !templateId) {
+      console.error('MSG91 credentials missing:', { authKey: !!authKey, templateId: !!templateId });
       throw new Error('MSG91 credentials not configured');
     }
 
@@ -32,43 +33,27 @@ serve(async (req) => {
       formattedPhone = '91' + formattedPhone; // Add India country code if missing
     }
 
-    // Prepare the WhatsApp message data
+    console.log('Formatted phone number:', formattedPhone);
+
+    // Prepare the WhatsApp message data for MSG91
     const messageData = {
-      integrated_number: "919711896666", // Your WhatsApp Business number
-      content_type: "template",
-      payload: {
-        to: formattedPhone,
-        type: "template",
-        template: {
-          name: templateId,
-          language: {
-            code: "en"
-          },
-          components: [
-            {
-              type: "body",
-              parameters: [
-                {
-                  type: "text",
-                  text: fullName
-                },
-                {
-                  type: "text", 
-                  text: selectedSlot
-                },
-                {
-                  type: "text",
-                  text: formData.healthGoals || "General consultation"
-                }
-              ]
-            }
-          ]
+      template_id: templateId,
+      short_url: "0",
+      realTimeResponse: "1",
+      recipients: [
+        {
+          mobiles: formattedPhone,
+          var1: fullName,
+          var2: selectedSlot,
+          var3: formData.healthGoals || "General consultation"
         }
-      }
+      ]
     };
 
+    console.log('Sending message data:', JSON.stringify(messageData, null, 2));
+
     // Send WhatsApp message via MSG91
-    const response = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
+    const response = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/bulk/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,18 +62,28 @@ serve(async (req) => {
       body: JSON.stringify(messageData)
     });
 
-    const result = await response.json();
-    console.log('MSG91 Response:', result);
+    const result = await response.text();
+    console.log('MSG91 Response status:', response.status);
+    console.log('MSG91 Response body:', result);
+
+    let parsedResult;
+    try {
+      parsedResult = JSON.parse(result);
+    } catch (e) {
+      console.error('Failed to parse MSG91 response:', e);
+      parsedResult = { message: result };
+    }
 
     if (!response.ok) {
-      throw new Error(`MSG91 API error: ${result.message || 'Unknown error'}`);
+      console.error('MSG91 API error:', parsedResult);
+      throw new Error(`MSG91 API error: ${parsedResult.message || 'Unknown error'}`);
     }
 
     return new Response(
       JSON.stringify({ 
         success: true, 
         message: 'WhatsApp confirmation sent successfully',
-        messageId: result.message_id 
+        response: parsedResult
       }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
