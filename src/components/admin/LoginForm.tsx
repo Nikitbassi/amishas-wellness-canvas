@@ -19,12 +19,14 @@ export const LoginForm = () => {
     setLoading(true);
 
     try {
+      console.log('Login form submitting with:', { email });
       const { error } = await signIn(email, password);
       
       if (error) {
+        console.error('Login error:', error);
         toast({
           title: "Login Failed",
-          description: error.message,
+          description: error.message || "Invalid credentials",
           variant: "destructive",
         });
       } else {
@@ -34,6 +36,7 @@ export const LoginForm = () => {
         });
       }
     } catch (error) {
+      console.error('Unexpected login error:', error);
       toast({
         title: "Login Failed",
         description: "An unexpected error occurred",
