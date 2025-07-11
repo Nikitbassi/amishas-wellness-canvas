@@ -1,13 +1,10 @@
 
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { AdminDashboard } from '@/components/admin/AdminDashboard';
 import { LoginForm } from '@/components/admin/LoginForm';
 
 const Admin = () => {
   const { user, loading } = useAuth();
-  const navigate = useNavigate();
 
   if (loading) {
     return (
