@@ -14,7 +14,176 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_users: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string
+          id: string
+          is_active: boolean | null
+          password_hash: string
+          role: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: string
+          is_active?: boolean | null
+          password_hash: string
+          role?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean | null
+          password_hash?: string
+          role?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      appointments: {
+        Row: {
+          appointment_date: string
+          appointment_time: string
+          created_at: string | null
+          id: string
+          lead_id: string | null
+          notes: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          appointment_date: string
+          appointment_time: string
+          created_at?: string | null
+          id?: string
+          lead_id?: string | null
+          notes?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          appointment_date?: string
+          appointment_time?: string
+          created_at?: string | null
+          id?: string
+          lead_id?: string | null
+          notes?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      available_slots: {
+        Row: {
+          created_at: string | null
+          current_bookings: number | null
+          date: string
+          id: string
+          is_available: boolean | null
+          max_bookings: number | null
+          time_slot: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          current_bookings?: number | null
+          date: string
+          id?: string
+          is_available?: boolean | null
+          max_bookings?: number | null
+          time_slot: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          current_bookings?: number | null
+          date?: string
+          id?: string
+          is_available?: boolean | null
+          max_bookings?: number | null
+          time_slot?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      leads: {
+        Row: {
+          age: number | null
+          busyness_level: string | null
+          city: string | null
+          created_at: string | null
+          full_name: string
+          gender: string | null
+          health_conditions: string[] | null
+          health_goals: string[] | null
+          id: string
+          notes: string | null
+          okay_with_paid_plan: boolean
+          past_attempts: string[] | null
+          phone_number: string
+          preferred_consultation_date_time: string | null
+          status: string | null
+          updated_at: string | null
+          weight_gain_reason: string | null
+          why_lose_weight: string | null
+        }
+        Insert: {
+          age?: number | null
+          busyness_level?: string | null
+          city?: string | null
+          created_at?: string | null
+          full_name: string
+          gender?: string | null
+          health_conditions?: string[] | null
+          health_goals?: string[] | null
+          id?: string
+          notes?: string | null
+          okay_with_paid_plan: boolean
+          past_attempts?: string[] | null
+          phone_number: string
+          preferred_consultation_date_time?: string | null
+          status?: string | null
+          updated_at?: string | null
+          weight_gain_reason?: string | null
+          why_lose_weight?: string | null
+        }
+        Update: {
+          age?: number | null
+          busyness_level?: string | null
+          city?: string | null
+          created_at?: string | null
+          full_name?: string
+          gender?: string | null
+          health_conditions?: string[] | null
+          health_goals?: string[] | null
+          id?: string
+          notes?: string | null
+          okay_with_paid_plan?: boolean
+          past_attempts?: string[] | null
+          phone_number?: string
+          preferred_consultation_date_time?: string | null
+          status?: string | null
+          updated_at?: string | null
+          weight_gain_reason?: string | null
+          why_lose_weight?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
