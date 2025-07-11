@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, CheckCircle, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ConsultationFormProps {
   onClose: () => void;
@@ -32,6 +32,7 @@ const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
   });
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState("");
+  const [isBooking, setIsBooking] = useState(false);
 
   const healthConditionOptions = [
     "Diabetes/Pre-diabetes",
@@ -113,21 +114,92 @@ const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
     }
   };
 
-  const handleBookingConfirm = () => {
+  const sendWhatsAppConfirmation = async () => {
+    try {
+      console.log('Sending WhatsApp confirmation...');
+      
+      const { data, error } = await supabase.functions.invoke('send-whatsapp-confirmation', {
+        body: {
+          phoneNumber: formData.phoneNumber,
+          fullName: formData.fullName,
+          selectedSlot: selectedSlot,
+          formData: formData
+        }
+      });
+
+      if (error) {
+        console.error('WhatsApp confirmation error:', error);
+        toast.error("Appointment booked but WhatsApp confirmation failed. We'll contact you soon!");
+      } else {
+        console.log('WhatsApp confirmation sent successfully:', data);
+        toast.success("Consultation booked successfully! WhatsApp confirmation sent to your number.");
+      }
+    } catch (error) {
+      console.error('Unexpected error sending WhatsApp:', error);
+      toast.error("Appointment booked but WhatsApp confirmation failed. We'll contact you soon!");
+    }
+  };
+
+  const saveLeadToDatabase = async () => {
+    try {
+      const leadData = {
+        full_name: formData.fullName,
+        age: parseInt(formData.age) || null,
+        gender: formData.gender,
+        city: formData.city,
+        phone_number: formData.phoneNumber,
+        health_goals: formData.healthGoals ? [formData.healthGoals] : null,
+        why_lose_weight: formData.whyLoseWeight,
+        health_conditions: formData.healthConditions.length > 0 ? formData.healthConditions : null,
+        past_attempts: formData.pastAttempts.length > 0 ? formData.pastAttempts : null,
+        weight_gain_reason: formData.weightGainReason,
+        busyness_level: formData.busynessLevel,
+        okay_with_paid_plan: formData.okayWithPaidPlan === "yes",
+        preferred_consultation_date_time: selectedSlot,
+        status: 'booked'
+      };
+
+      const { error } = await supabase
+        .from('leads')
+        .insert([leadData]);
+
+      if (error) {
+        console.error('Error saving lead:', error);
+        throw error;
+      }
+
+      console.log('Lead saved successfully');
+    } catch (error) {
+      console.error('Error saving lead to database:', error);
+      throw error;
+    }
+  };
+
+  const handleBookingConfirm = async () => {
     if (!selectedSlot) {
       toast.error("Please select a consultation time slot");
       return;
     }
     
-    // Simulate booking confirmation
-    toast.success("Consultation booked successfully! You'll receive confirmation via WhatsApp and SMS.");
+    setIsBooking(true);
     
-    // Here you would typically send the data to your backend
-    console.log("Booking confirmed:", { ...formData, selectedSlot });
-    
-    setTimeout(() => {
-      onClose();
-    }, 2000);
+    try {
+      // Save lead to database
+      await saveLeadToDatabase();
+      
+      // Send WhatsApp confirmation
+      await sendWhatsAppConfirmation();
+      
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Booking confirmation error:', error);
+      toast.error("Something went wrong. Please try again or contact us directly.");
+    } finally {
+      setIsBooking(false);
+    }
   };
 
   if (showCalendar) {
@@ -157,10 +229,10 @@ const ConsultationForm = ({ onClose }: ConsultationFormProps) => {
         
         <Button
           onClick={handleBookingConfirm}
-          disabled={!selectedSlot}
+          disabled={!selectedSlot || isBooking}
           className="w-full bg-green-600 hover:bg-green-700 text-white py-3"
         >
-          Confirm Booking
+          {isBooking ? "Booking..." : "Confirm Booking"}
         </Button>
       </div>
     );

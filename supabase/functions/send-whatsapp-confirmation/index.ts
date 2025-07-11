@@ -1,0 +1,113 @@
+
+import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+}
+
+serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response(null, { headers: corsHeaders });
+  }
+
+  try {
+    const { phoneNumber, fullName, selectedSlot, formData } = await req.json();
+    
+    console.log('Sending WhatsApp confirmation for:', { phoneNumber, fullName, selectedSlot });
+
+    // Get MSG91 credentials from environment
+    const authKey = Deno.env.get('MSG91_AUTH_KEY');
+    const templateId = Deno.env.get('MSG91_WHATSAPP_TEMPLATE_ID');
+
+    if (!authKey || !templateId) {
+      throw new Error('MSG91 credentials not configured');
+    }
+
+    // Format phone number (ensure it starts with country code)
+    let formattedPhone = phoneNumber.replace(/\D/g, ''); // Remove non-digits
+    if (!formattedPhone.startsWith('91') && formattedPhone.length === 10) {
+      formattedPhone = '91' + formattedPhone; // Add India country code if missing
+    }
+
+    // Prepare the WhatsApp message data
+    const messageData = {
+      integrated_number: "919711896666", // Your WhatsApp Business number
+      content_type: "template",
+      payload: {
+        to: formattedPhone,
+        type: "template",
+        template: {
+          name: templateId,
+          language: {
+            code: "en"
+          },
+          components: [
+            {
+              type: "body",
+              parameters: [
+                {
+                  type: "text",
+                  text: fullName
+                },
+                {
+                  type: "text", 
+                  text: selectedSlot
+                },
+                {
+                  type: "text",
+                  text: formData.healthGoals || "General consultation"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    };
+
+    // Send WhatsApp message via MSG91
+    const response = await fetch('https://control.msg91.com/api/v5/whatsapp/whatsapp-outbound-message/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'authkey': authKey,
+      },
+      body: JSON.stringify(messageData)
+    });
+
+    const result = await response.json();
+    console.log('MSG91 Response:', result);
+
+    if (!response.ok) {
+      throw new Error(`MSG91 API error: ${result.message || 'Unknown error'}`);
+    }
+
+    return new Response(
+      JSON.stringify({ 
+        success: true, 
+        message: 'WhatsApp confirmation sent successfully',
+        messageId: result.message_id 
+      }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200 
+      }
+    );
+
+  } catch (error) {
+    console.error('Error sending WhatsApp message:', error);
+    
+    return new Response(
+      JSON.stringify({ 
+        success: false, 
+        error: error.message 
+      }),
+      { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 500 
+      }
+    );
+  }
+});
