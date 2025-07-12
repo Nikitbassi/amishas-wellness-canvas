@@ -1,15 +1,13 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Users, Award } from "lucide-react";
-
 interface HeroSectionProps {
   onBookConsultation: () => void;
 }
-
-const HeroSection = ({ onBookConsultation }: HeroSectionProps) => {
-  return (
-    <section className="relative py-20 lg:py-32 overflow-hidden">
+const HeroSection = ({
+  onBookConsultation
+}: HeroSectionProps) => {
+  return <section className="relative py-20 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-blue-50 to-green-50"></div>
       <div className="relative container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -62,10 +60,7 @@ const HeroSection = ({ onBookConsultation }: HeroSectionProps) => {
             </div>
             
             <div className="pt-6">
-              <Button
-                onClick={onBookConsultation}
-                className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
+              <Button onClick={onBookConsultation} className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                 Book Your FREE Consultation
               </Button>
               <p className="text-sm text-gray-600 mt-3">
@@ -76,11 +71,7 @@ const HeroSection = ({ onBookConsultation }: HeroSectionProps) => {
           
           <div className="relative">
             <div className="relative z-10 bg-white rounded-3xl shadow-2xl p-8 transform rotate-2 hover:rotate-0 transition-transform duration-300">
-              <img
-                src="/placeholder.svg"
-                alt="Dietitian Amisha"
-                className="w-full h-96 object-cover rounded-2xl"
-              />
+              <img src="/placeholder.svg" alt="Dietitian Amisha" className="w-full h-96 object-cover rounded-2xl" />
               <div className="absolute -top-4 -right-4 bg-green-500 text-white p-3 rounded-full shadow-lg">
                 <Award className="w-6 h-6" />
               </div>
@@ -89,8 +80,6 @@ const HeroSection = ({ onBookConsultation }: HeroSectionProps) => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
