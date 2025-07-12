@@ -1,26 +1,15 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Users, Award } from "lucide-react";
-
 interface HeroSectionProps {
   onBookConsultation: () => void;
 }
-
-const HeroSection = ({ onBookConsultation }: HeroSectionProps) => {
-  return (
-    <section className="relative py-20 lg:py-32 overflow-hidden">
+const HeroSection = ({
+  onBookConsultation
+}: HeroSectionProps) => {
+  return <section className="relative py-20 lg:py-32 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-blue-50 to-green-50"></div>
       <div className="relative container mx-auto px-4">
-        {/* Logo Header */}
-        <div className="text-center mb-12">
-          <img 
-            src="/lovable-uploads/88e2e452-fb35-4bd3-a33f-b6c1ba158cc3.png" 
-            alt="Diet with Amisha" 
-            className="h-16 md:h-20 mx-auto mb-4"
-          />
-        </div>
-
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="flex flex-wrap gap-3">
@@ -91,8 +80,6 @@ const HeroSection = ({ onBookConsultation }: HeroSectionProps) => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;

@@ -5,7 +5,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Star, Clock, Users, Award, CheckCircle, Calendar, Phone, Mail } from "lucide-react";
-import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import TransformationSlideshow from "@/components/TransformationSlideshow";
 import WhyChooseUs from "@/components/WhyChooseUs";
@@ -25,9 +24,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-blue-50">
-      {/* Header with Logo */}
-      <Header />
-      
       {/* Hero Section */}
       <HeroSection onBookConsultation={handleBookConsultation} />
       
