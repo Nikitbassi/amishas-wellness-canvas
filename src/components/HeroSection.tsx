@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Users, Award } from "lucide-react";
@@ -28,9 +29,7 @@ const HeroSection = ({
             </div>
             
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Transform Your Health with 
-              <span className="text-green-600"> Sustainable </span>
-              Diet Plans
+              1500+ women have lost weight with Amisha's Diet Plan
             </h1>
             
             <p className="text-xl text-gray-700 leading-relaxed">
