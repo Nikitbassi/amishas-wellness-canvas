@@ -27,14 +27,9 @@ const HeroSection = ({
               </Badge>
             </div>
             
-            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              1500+ women have lost weight with Amisha's Diet Plan
-            </h1>
+            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">1500+ Women have lost weight with Amisha's Diet Plan</h1>
             
-            <p className="text-xl text-gray-700 leading-relaxed">
-              Lose weight, reverse diabetes & PCOD with . 
-              No gym required. No extreme restrictions. Just real food, real results.
-            </p>
+            <p className="text-gray-700 leading-relaxed text-2xl">Real Results with a Simple, Sustainable Diet.</p>
             
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
