@@ -27,7 +27,7 @@ const HeroSection = ({
               </Badge>
             </div>
             
-            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">1500+ Women have lost weight with Amisha's Diet Plan</h1>
+            <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 leading-tight">1500+ Women Have Lost Weight with Amisha's Diet Plan</h1>
             
             <p className="text-gray-700 leading-relaxed text-2xl">Real Results, Simple Sustainable Diet.</p>
             
