@@ -76,7 +76,7 @@ const WhyChooseUs = ({
               </h3>
               <div className="space-y-4 text-gray-700">
                 <p className="text-lg">
-                  With over <strong>5 years of dedicated experience</strong> and <strong>500+ successful transformations</strong>, 
+                  With over <strong>5 years of dedicated experience</strong> and <strong>1500+ successful transformations</strong>, 
                   Amisha specializes in creating sustainable, home-based nutrition plans that work with your real life.
                 </p>
                 <p>
