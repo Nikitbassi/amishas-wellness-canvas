@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Star, Users, Award } from "lucide-react";
@@ -33,7 +32,7 @@ const HeroSection = ({
             </h1>
             
             <p className="text-xl text-gray-700 leading-relaxed">
-              Lose weight, reverse diabetes & PCOD with <strong>personalized home-based diet plans</strong>. 
+              Lose weight, reverse diabetes & PCOD with . 
               No gym required. No extreme restrictions. Just real food, real results.
             </p>
             
