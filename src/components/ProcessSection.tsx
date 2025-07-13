@@ -1,49 +1,26 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { FileText, Calendar, TrendingUp, ArrowRight } from "lucide-react";
-
 const ProcessSection = () => {
-  const steps = [
-    {
-      number: "01",
-      icon: FileText,
-      title: "Initial Assessment & Personalized Plan",
-      description: "Comprehensive nutritional and lifestyle assessment followed by a custom weekly diet plan tailored to your goals, preferences, and health conditions.",
-      details: [
-        "Detailed health history review",
-        "Dietary preferences assessment", 
-        "Lifestyle and schedule analysis",
-        "Personalized weekly meal plan creation"
-      ]
-    },
-    {
-      number: "02", 
-      icon: Calendar,
-      title: "Weekly Customization & Dedicated Support",
-      description: "Weekly plan adjustments based on your feedback and progress, alongside 8 hours of daily support to keep you motivated and on track.",
-      details: [
-        "Weekly plan reviews and updates",
-        "8 hours daily support via chat/call",
-        "Recipe modifications and alternatives",
-        "Continuous motivation and guidance"
-      ]
-    },
-    {
-      number: "03",
-      icon: TrendingUp,
-      title: "Consistent Tracking & Lifestyle Integration",
-      description: "Regular tracking of weight, body measurements, and lifestyle factors to ensure sustainable progress and long-term habit formation.",
-      details: [
-        "Weekly progress monitoring",
-        "Body measurement tracking",
-        "Habit formation support",
-        "Long-term lifestyle integration"
-      ]
-    }
-  ];
-
-  return (
-    <section className="py-20 bg-white">
+  const steps = [{
+    number: "01",
+    icon: FileText,
+    title: "Initial Assessment & Personalized Plan",
+    description: "Comprehensive nutritional and lifestyle assessment followed by a custom weekly diet plan tailored to your goals, preferences, and health conditions.",
+    details: ["Detailed health history review", "Dietary preferences assessment", "Lifestyle and schedule analysis", "Personalized weekly meal plan creation"]
+  }, {
+    number: "02",
+    icon: Calendar,
+    title: "Weekly Customization & Dedicated Support",
+    description: "Weekly plan adjustments based on your feedback and progress, alongside 8 hours of daily support to keep you motivated and on track.",
+    details: ["Weekly plan reviews and updates", "8 hours daily support via chat/call", "Recipe modifications and alternatives", "Continuous motivation and guidance"]
+  }, {
+    number: "03",
+    icon: TrendingUp,
+    title: "Consistent Tracking & Lifestyle Integration",
+    description: "Regular tracking of weight, body measurements, and lifestyle factors to ensure sustainable progress and long-term habit formation.",
+    details: ["Weekly progress monitoring", "Body measurement tracking", "Habit formation support", "Long-term lifestyle integration"]
+  }];
+  return <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
@@ -55,8 +32,7 @@ const ProcessSection = () => {
         </div>
         
         <div className="max-w-6xl mx-auto">
-          {steps.map((step, index) => (
-            <div key={index} className="relative">
+          {steps.map((step, index) => <div key={index} className="relative">
               <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
                 <div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                   <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
@@ -76,12 +52,10 @@ const ProcessSection = () => {
                         {step.description}
                       </p>
                       <ul className="space-y-3">
-                        {step.details.map((detail, detailIndex) => (
-                          <li key={detailIndex} className="flex items-center">
+                        {step.details.map((detail, detailIndex) => <li key={detailIndex} className="flex items-center">
                             <div className="w-2 h-2 bg-green-500 rounded-full mr-3"></div>
                             <span className="text-gray-700">{detail}</span>
-                          </li>
-                        ))}
+                          </li>)}
                       </ul>
                     </CardContent>
                   </Card>
@@ -89,25 +63,18 @@ const ProcessSection = () => {
                 
                 <div className={`${index % 2 === 1 ? 'lg:order-1' : ''} relative`}>
                   <div className="relative z-10">
-                    <img
-                      src="/placeholder.svg"
-                      alt={`Step ${step.number}`}
-                      className="w-full h-80 object-cover rounded-3xl shadow-lg"
-                    />
+                    
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 to-blue-400/20 rounded-3xl transform rotate-3"></div>
                 </div>
               </div>
               
-              {index < steps.length - 1 && (
-                <div className="flex justify-center mb-8">
+              {index < steps.length - 1 && <div className="flex justify-center mb-8">
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
                     <ArrowRight className="w-6 h-6 text-green-600" />
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                </div>}
+            </div>)}
         </div>
         
         <div className="text-center mt-12 p-8 bg-gradient-to-r from-green-50 to-blue-50 rounded-3xl">
@@ -133,8 +100,6 @@ const ProcessSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ProcessSection;

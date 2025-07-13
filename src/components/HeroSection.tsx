@@ -64,7 +64,7 @@ const HeroSection = ({
           
           <div className="relative">
             <div className="relative z-10 bg-white rounded-3xl shadow-2xl p-8 transform rotate-2 hover:rotate-0 transition-transform duration-300">
-              <img alt="Dietitian Amisha" src="/lovable-uploads/97ffd4f8-84f3-4fe1-b66a-848936e72701.png" className="w-full h-96 rounded-2xl object-fill" />
+              <img alt="Dietitian Amisha" className="w-full h-96 rounded-2xl object-fill" src="/lovable-uploads/3bc7a5ce-3674-4f8e-be70-7bbc10963c31.png" />
               <div className="absolute -top-4 -right-4 bg-green-500 text-white p-3 rounded-full shadow-lg">
                 <Award className="w-6 h-6" />
               </div>
