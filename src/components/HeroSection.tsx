@@ -17,10 +17,10 @@ const HeroSection = ({
                 <Star className="w-4 h-4 mr-1" />
                 4.9★ Google Rating
               </Badge>
-              <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">
-                <Users className="w-4 h-4 mr-1" />
-                500+ Lives Transformed
-              </Badge>
+               <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">
+                 <Users className="w-4 h-4 mr-1" />
+                 1500+ Lives Transformed
+               </Badge>
               <Badge className="bg-purple-100 text-purple-800 hover:bg-purple-200">
                 <Award className="w-4 h-4 mr-1" />
                 5+ Years Experience
