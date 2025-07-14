@@ -8,17 +8,9 @@ const WhyChooseUs = ({
   onBookConsultation
 }: WhyChooseUsProps) => {
   const features = [{
-    icon: Award,
-    title: "5+ Years of Proven Success",
-    description: "Transformed 500+ lives with sustainable, science-backed approaches to weight loss and health management."
-  }, {
     icon: Heart,
     title: "Specialized Expertise",
     description: "Expert in weight loss, diabetes management, and PCOD reversal through personalized home-based nutrition plans."
-  }, {
-    icon: Users,
-    title: "Unique Food-First Philosophy",
-    description: "Focus on ADDING nutritious foods rather than restriction. Yes, some junk food can still fit in your weight loss journey!"
   }, {
     icon: Calendar,
     title: "Weekly Personalized Plans",
@@ -52,7 +44,7 @@ const WhyChooseUs = ({
           </p>
         </div>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {features.map((feature, index) => <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
               <CardContent className="p-6 text-center">
                 <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
